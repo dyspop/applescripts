@@ -1,3 +1,4 @@
+```
 -- variables
 set delayAmt to 0.1
 set regexMatchBefore to "^[^_]*" -- var input after this expression
@@ -196,4 +197,4 @@ tell application "System Events"
 		
 	end repeat
 end tell
-
+```
