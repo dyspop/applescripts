@@ -208,18 +208,51 @@ tell application "System Events"
 			tell application "System Events" to keystroke "f" using command down -- load the find drawer
 			delay delayAmt
 			tell application "System Events" to key code 51 -- delete
-			
-			delay delayAmt
 			-- tell application "System Events" to keystroke "v" using command down -- paste the context finder
-			typeKeys("Search Results")
 			tell application "System Events" to keystroke "a" using control down -- go to start of line
-			-- set the clipboard to regexMatchBefore
+			tell application "System Events" to keystroke (key code 22 using shift down)
+			tell application "System Events" to keystroke (key code 33)
+			tell application "System Events" to keystroke (key code 22 using shift down)
+			tell application "System Events" to keystroke (key code 27 using shift down)
+			tell application "System Events" to keystroke (key code 30)
+			tell application "System Events" to keystroke (key code 28 using shift down) -- regex match before
 			delay delayAmt
-			tell application "System Events" to keystroke "v" using command down -- paste the regex
+			tell application "System Events" to keystroke "Search Results"
+			delay delayAmt
+			tell application "System Events" to key code 53 --escape the find menu context
+			tell application "System Events" to key code 51 -- delete
+			delay delayAmt
+			tell application "System Events" to keystroke "f" using command down -- load the find drawer
+			tell application "System Events" to key code 51 -- delete
+			tell application "System Events" to keystroke "a" using control down -- go to start of line
+			--^[^_]*
+			tell application "System Events" to keystroke (key code 22 using shift down) --^-- regex match before
+			tell application "System Events" to keystroke (key code 33) --[-- regex match before
+			tell application "System Events" to keystroke (key code 22 using shift down) --^-- regex match before
+			tell application "System Events" to keystroke (key code 27 using shift down) --_-- regex match before
+			tell application "System Events" to keystroke (key code 30) --]-- regex match before
+			tell application "System Events" to keystroke (key code 28 using shift down) --*-- regex match before
+			delay delayAmt
+			tell application "System Events" to keystroke "http"
+			delay delayAmt
+			tell application "System Events" to key code 53 --escape the find menu context
+			tell application "System Events" to key code 51 -- delete
+			--[]+([^]+)
+			tell application "System Events" to keystroke (key code 33) --[-- regex match line after
+			tell application "System Events" to keystroke (key code 30) --]-- regex match line after
+			tell application "System Events" to keystroke (key code 24 using shift down) --+-- regex match line after
+			tell application "System Events" to keystroke (key code 25 using shift down) --(-- regex match line after
+			tell application "System Events" to keystroke (key code 33) --[-- regex match line after
+			tell application "System Events" to keystroke (key code 22 using shift down) --^-- regex match before
+			tell application "System Events" to keystroke (key code 30) --]-- regex match line after
+			tell application "System Events" to keystroke (key code 24 using shift down) --+-- regex match line after
+			tell application "System Events" to keystroke (key code 29 using shift down) --)-- regex match before
+			
 			exit repeat
 		end if
 		
 	end repeat
 end tell
+
 
 ```
