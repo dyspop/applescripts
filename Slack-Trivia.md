@@ -56,13 +56,23 @@ on encode_string(aString)
 	set myList to text items of aString -- Gives list {"2", "69", "12"}
 	set containerList to {}
 	repeat with myItem in myList -- Loop through the items in the list
-		display dialog encode_char(myItem)
+		-- display dialog encode_char(myItem) -- encode each character
+		-- add to list (TODO)
 	end repeat
 	set AppleScript's text item delimiters to myTID -- It's considered good practice to return the TID's to their original state
 end encode_string
 
+on typeKeys(aString)
+	set myList to text items of aString
+	repeat with myItem in myList
+		tell application "System Events" to keystroke myItem
+		delay 0.1
+	end repeat
+end typeKeys
 
-encode_string("test")
+-- encode_string("test") -- how to call this...
+
+---------------------- BOT -----------------------
 
 --open Google Chrome to resize
 tell application "Google Chrome" to activate
@@ -138,6 +148,7 @@ tell application "System Events"
 	end tell
 end tell
 
+-- Do stuff in Slack
 tell application "System Events" to key code 53 --escape any context we might already be in
 tell application "System Events" to keystroke "k" using command down --load the slack switcher
 delay delayAmt
@@ -147,6 +158,8 @@ tell application "System Events" to key code 36 --enter
 
 delay delayAmt
 
+
+-- the "bot" loop
 -- only run this thing between Slack and Google Chrome 
 tell application "System Events"
 	repeat 3 times
@@ -172,13 +185,14 @@ tell application "System Events"
 			
 			tell application "Google Chrome" to open location (searchQuery)
 			do shell script "/usr/local/bin/cliclick c:100,300" -- click on the left
-			delay 1 -- long delay
+			delay 1 -- long delay keep this because search results are slow in the browser some times
 			tell application "System Events" to keystroke "a" using command down -- select all input
 			tell application "System Events" to keystroke "a" using command down -- select all input
 			delay delayAmt
 			do shell script "/usr/local/bin/cliclick c:180,0" -- open edit menu
 			delay delayAmt
 			do shell script "/usr/local/bin/cliclick c:180,100" -- copy the highlighted text
+			delay delayAmt
 			tell application "Sublime Text 2" to activate
 		end if
 		if "Sublime Text 2" is activeApp then
@@ -191,10 +205,21 @@ tell application "System Events"
 			do shell script "/usr/local/bin/cliclick c:400,400" -- click in to the file
 			do shell script "/usr/local/bin/cliclick c:220,0" -- edit
 			do shell script "/usr/local/bin/cliclick c:220,140" -- paste
-			delay 1
+			tell application "System Events" to keystroke "f" using command down -- load the find drawer
+			delay delayAmt
+			tell application "System Events" to key code 51 -- delete
+			
+			delay delayAmt
+			-- tell application "System Events" to keystroke "v" using command down -- paste the context finder
+			typeKeys("Search Results")
+			tell application "System Events" to keystroke "a" using control down -- go to start of line
+			-- set the clipboard to regexMatchBefore
+			delay delayAmt
+			tell application "System Events" to keystroke "v" using command down -- paste the regex
 			exit repeat
 		end if
 		
 	end repeat
 end tell
+
 ```
